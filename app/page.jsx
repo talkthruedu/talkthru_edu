@@ -361,7 +361,7 @@ export default function Page() {
           </div>
           <a
             className="news-entry"
-            href="https://blog.naver.com/talkthru_/224226448735"
+            href="https://blog.naver.com/talkthru_/224168976721"
             target="_blank"
             rel="noopener noreferrer"
             style={{ textDecoration: 'none' }}
