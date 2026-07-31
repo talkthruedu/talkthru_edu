@@ -1,4 +1,5 @@
 import Faq from '../components/Faq';
+import InquiryForm from '../components/InquiryForm';
 
 // 시간표 원본 사진을 아직 못 받아서, 이 한 장만 임시로 기존 사이트 주소를 사용합니다.
 const IMG = {
@@ -214,7 +215,7 @@ export default function Page() {
           </div>
           <div className="tour-grid">
             <div className="tour">
-              <img src={IMG.bluemountains} alt="블루마운틴" />
+              <img src={IMG.bluemountains} alt="블루마운틴" style={{ objectPosition: 'center 35%' }} />
               <div className="tx"><h3>블루마운틴</h3><p>웅장한 협곡과 유칼립투스 숲에서 자연의 스케일을 체험합니다. (부모+자녀 동반)</p></div>
             </div>
             <div className="tour">
@@ -358,11 +359,21 @@ export default function Page() {
             <span className="eyebrow">NEWS</span>
             <h2>소식</h2>
           </div>
-          <div className="news">
-            새로운 이야기를 준비 중입니다.
-            <br />
-            캠프와 시드니 생활에 대한 소식은 곧 업데이트됩니다.
-          </div>
+          <a
+            className="news-entry"
+            href="https://blog.naver.com/talkthru_/224226448735"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ textDecoration: 'none' }}
+          >
+            <div className="ne-icon">✍️</div>
+            <div>
+              <div className="ne-tag">CURATOR&apos;S NOTE</div>
+              <h3>TALK THRU EDU 기획 배경</h3>
+              <p>왜 이 캠프를 만들게 되었는지, 기획자의 이야기를 네이버 블로그에서 들려드립니다.</p>
+            </div>
+            <span className="ne-link">블로그에서 읽기 →</span>
+          </a>
         </div>
       </section>
 
@@ -374,15 +385,20 @@ export default function Page() {
           함께 준비해볼까요?
         </h2>
         <p>
-          모든 문의는 직접 검토하고 답변드립니다.
+          아래 폼을 남겨주시면 직접 검토하고 답변드립니다.
           <br />
-          카카오톡으로 물어보시면 가장 빠르게 안내받으실 수 있어요.
+          급하신 경우 카카오톡으로도 빠르게 안내받으실 수 있어요.
         </p>
-        <div className="buttons" style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
-          <a className="btn btn-kakao" href={KAKAO_URL} target="_blank" rel="noopener noreferrer">
-            💬 카카오톡으로 문의하기
+        <InquiryForm />
+        <div style={{ marginTop: 22 }}>
+          <a
+            className="btn btn-kakao"
+            href={KAKAO_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            💬 카카오톡으로 바로 문의하기
           </a>
-          <a className="btn btn-ghost" href={`mailto:${EMAIL}`}>이메일로 문의하기</a>
         </div>
       </section>
 
