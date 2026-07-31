@@ -16,16 +16,25 @@ img{max-width:100%}
 
 /* ===== header ===== */
 .site-header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.93);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
-.site-header .inner{max-width:1120px;margin:0 auto;padding:0 24px;height:64px;display:flex;align-items:center;justify-content:space-between}
-.brand{display:flex;align-items:baseline;gap:8px;text-decoration:none}
+.site-header .inner{max-width:1120px;margin:0 auto;padding:0 24px;min-height:64px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.brand{display:flex;align-items:baseline;gap:8px;text-decoration:none;flex:none;white-space:nowrap}
 .brand .logo{font-weight:700;font-size:18px;color:var(--navy);letter-spacing:-.01em}
 .brand .sub{font-size:12px;font-weight:600;color:var(--gold);letter-spacing:.14em}
-.nav{display:flex;gap:22px;align-items:center}
-.nav a{font-size:14px;font-weight:500;color:var(--ink-soft);text-decoration:none;transition:color .15s}
+.nav{display:flex;gap:22px;align-items:center;flex-wrap:nowrap}
+.nav a{font-size:14px;font-weight:500;color:var(--ink-soft);text-decoration:none;transition:color .15s;white-space:nowrap}
 .nav a:hover{color:var(--navy)}
-.nav .nav-cta{background:var(--navy);color:#fff;font-weight:600;border-radius:10px;padding:9px 16px}
+.nav .nav-cta{background:var(--navy);color:#fff;font-weight:600;border-radius:10px;padding:9px 16px;flex:none}
 .nav .nav-cta:hover{background:var(--navy-soft);color:#fff}
-@media(max-width:860px){.nav a:not(.nav-cta){display:none}}
+.nav .lang-switch{border:1px solid var(--line);border-radius:999px;padding:6px 13px;font-weight:600;font-size:13px;color:var(--navy);flex:none}
+.nav .lang-switch:hover{background:var(--sand);color:var(--navy)}
+@media(max-width:860px){
+  .nav a:not(.nav-cta):not(.lang-switch){display:none}
+  .site-header .inner{padding:10px 16px}
+  .brand .logo{font-size:15.5px}
+  .nav{gap:8px}
+  .nav .nav-cta{padding:8px 12px;font-size:13px}
+  .nav .lang-switch{padding:6px 10px;font-size:12px}
+}
 
 /* ===== hero ===== */
 .hero{background:radial-gradient(1100px 420px at 85% -10%,rgba(31,111,178,.38),transparent 60%),radial-gradient(700px 340px at 8% 110%,rgba(201,168,106,.22),transparent 60%),var(--navy);color:#fff;padding:96px 24px 72px;text-align:center}

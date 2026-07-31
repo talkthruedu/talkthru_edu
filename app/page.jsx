@@ -46,6 +46,7 @@ export default function Page() {
             <a href="#faq">FAQ</a>
             <a href="#news">소식</a>
             <a className="nav-cta" href="#inquiry">상담 신청</a>
+            <a className="lang-switch" href="/en">EN</a>
           </nav>
         </div>
       </header>
