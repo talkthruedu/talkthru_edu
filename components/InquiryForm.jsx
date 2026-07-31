@@ -14,7 +14,7 @@ const EMAIL = 'youniek0712@gmail.com';
 
 // Web3Forms 무료 이메일 전송 서비스 — https://web3forms.com 에서 이메일로 발급받은
 // Access Key를 여기에 넣으면, 폼 제출 시 별도 메일 앱 없이 바로 이 이메일로 접수됩니다.
-const WEB3FORMS_ACCESS_KEY = 'YOUR_WEB3FORMS_ACCESS_KEY';
+const WEB3FORMS_ACCESS_KEY = '12b73f92-a63c-43c2-961b-f390fd6b6a7a';
 
 export default function InquiryForm() {
   const [form, setForm] = useState({
