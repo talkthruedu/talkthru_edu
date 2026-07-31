@@ -1,14 +1,28 @@
 import Faq from '../components/Faq';
 
-const ASSET = 'https://talkthrustudio.lovable.app/__l5e/assets-v1';
+// 시간표 원본 사진을 아직 못 받아서, 이 한 장만 임시로 기존 사이트 주소를 사용합니다.
 const IMG = {
-  timetable: `${ASSET}/e2298632-793d-416f-b1fa-24ec2c1f0fd2/camp-timetable.jpg`,
-  bluemountains: `${ASSET}/033d662c-1a7b-466a-a151-14996ca314c5/edu-bluemountains.jpg`,
-  portstephens: `${ASSET}/59841c94-cdd6-439b-8d98-c5e82cd93af3/edu-portstephens.jpeg`,
-  huntervalley: `${ASSET}/145a02f6-02b3-4bb3-8a57-20aed6525d27/edu-huntervalley.png`,
-  bondi: `${ASSET}/e02fdcd2-aabf-4a32-95e8-87cb224b066f/edu-bondi.jpeg`,
-  mantraMap: `${ASSET}/6676ebcc-bdeb-4b3e-9e2c-2a7d265188b2/mantra-map.png`,
+  timetable:
+    'https://talkthrustudio.lovable.app/__l5e/assets-v1/e2298632-793d-416f-b1fa-24ec2c1f0fd2/camp-timetable.jpg',
+  bluemountains: '/images/tour-bluemountains.jpg',
+  portstephens: '/images/tour-portstephens.jpg',
+  huntervalley: '/images/tour-huntervalley.jpg',
+  bondi: '/images/tour-bondi.jpg',
+  mantraMap: '/images/mantra-map.jpg',
 };
+
+const ACTIVITIES = [
+  { img: '/images/act-operahouse.jpg', title: '오페라하우스 & 보타닉 가든' },
+  { img: '/images/act-mca.jpg', title: '현대미술관 MCA' },
+  { img: '/images/act-aquarium.jpg', title: '와일드라이프 파크 & 아쿠아리움' },
+  { img: '/images/act-pylon.jpg', title: '시드니 타워 & 파이론 룩아웃' },
+  { img: '/images/act-manly.jpg', title: '맨리 비치 피크닉' },
+  { img: '/images/act-ausmuseum.jpg', title: '호주 박물관' },
+  { img: '/images/act-lunapark.jpg', title: '루나파크' },
+  { img: '/images/act-artgallery.jpg', title: 'NSW 아트 갤러리' },
+  { img: '/images/act-pingpong.jpg', title: '실내 스포츠 활동' },
+  { img: '/images/act-drama.jpg', title: '즉흥 연기·드라마 체험' },
+];
 
 const KAKAO_URL = 'https://open.kakao.com/o/scX96edi';
 const EMAIL = 'youniek0712@gmail.com';
@@ -180,17 +194,13 @@ export default function Page() {
             <h2>교실 밖에서 이어지는 배움</h2>
             <p>방과 후에는 시드니 곳곳에서, 주말에는 온 가족이 함께 근교로 떠납니다.</p>
           </div>
-          <div className="chips">
-            <span className="chip"><span className="e">🎭</span>오페라하우스 & 보타닉 가든</span>
-            <span className="chip"><span className="e">🎨</span>현대미술관 MCA</span>
-            <span className="chip"><span className="e">🐨</span>와일드라이프 파크 & 아쿠아리움</span>
-            <span className="chip"><span className="e">🗼</span>시드니 타워 & 파이론 룩아웃</span>
-            <span className="chip"><span className="e">🏖️</span>맨리 비치 피크닉</span>
-            <span className="chip"><span className="e">🦖</span>호주 박물관</span>
-            <span className="chip"><span className="e">🎡</span>루나파크</span>
-            <span className="chip"><span className="e">🖼️</span>NSW 아트 갤러리</span>
-            <span className="chip"><span className="e">🏸</span>실내 스포츠 활동</span>
-            <span className="chip"><span className="e">🎬</span>즉흥 연기·드라마 체험</span>
+          <div className="act-grid">
+            {ACTIVITIES.map((a) => (
+              <div className="act-card" key={a.img}>
+                <img src={a.img} alt={a.title} loading="lazy" />
+                <div className="act-tx">{a.title}</div>
+              </div>
+            ))}
           </div>
           <div className="tour-grid">
             <div className="tour">
