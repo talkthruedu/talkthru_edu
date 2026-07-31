@@ -12,6 +12,11 @@ const TIME_SLOTS = [
 
 const EMAIL = 'youniek0712@gmail.com';
 
+// Web3Forms free email delivery service — https://web3forms.com
+// Paste the Access Key you receive by email here so submissions land directly
+// in your inbox, without opening any mail app.
+const WEB3FORMS_ACCESS_KEY = 'YOUR_WEB3FORMS_ACCESS_KEY';
+
 export default function InquiryFormEn() {
   const [form, setForm] = useState({
     studentName: '',
@@ -23,12 +28,11 @@ export default function InquiryFormEn() {
     callTime: '',
     kakaoId: '',
   });
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState('idle'); // idle | sending | success | error
 
   const update = (key) => (e) => setForm((f) => ({ ...f, [key]: e.target.value }));
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const buildMailto = () => {
     const subject = `[Consultation Request] Inquiry about ${form.studentName || 'a student'}`;
     const body = [
       '■ Student Information',
@@ -43,10 +47,57 @@ export default function InquiryFormEn() {
       `- Best Time to Call: ${form.callTime || '-'}`,
       `- KakaoTalk ID: ${form.kakaoId || '-'}`,
     ].join('\n');
-    const mailto = `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    window.location.href = mailto;
-    setSent(true);
+    return `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!WEB3FORMS_ACCESS_KEY || WEB3FORMS_ACCESS_KEY === 'YOUR_WEB3FORMS_ACCESS_KEY') {
+      window.location.href = buildMailto();
+      setStatus('success');
+      return;
+    }
+
+    setStatus('sending');
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_ACCESS_KEY,
+          subject: `[Consultation Request] Inquiry about ${form.studentName || 'a student'}`,
+          from_name: 'TALK THRU EDU Website',
+          Student_Name: form.studentName,
+          Student_Age: form.studentAge,
+          Grade: form.grade,
+          Parent_Name: form.parentName,
+          Parent_Phone: form.parentPhone,
+          Parent_Email: form.parentEmail || '-',
+          Best_Time_To_Call: form.callTime || '-',
+          KakaoTalk_ID: form.kakaoId || '-',
+        }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setStatus('success');
+      } else {
+        setStatus('error');
+      }
+    } catch (err) {
+      setStatus('error');
+    }
+  };
+
+  if (status === 'success') {
+    return (
+      <div className="inquiry-form if-success">
+        <div className="if-success-icon">✓</div>
+        <h3>Your inquiry has been received!</h3>
+        <p>We&apos;ll review it and get back to you soon. For urgent questions, feel free to reach us on KakaoTalk too.</p>
+      </div>
+    );
+  }
 
   return (
     <form className="inquiry-form" onSubmit={handleSubmit}>
@@ -114,12 +165,12 @@ export default function InquiryFormEn() {
         </div>
       </div>
 
-      <button type="submit" className="btn btn-gold if-submit">
-        Submit Inquiry
+      <button type="submit" className="btn btn-gold if-submit" disabled={status === 'sending'}>
+        {status === 'sending' ? 'Sending...' : 'Submit Inquiry'}
       </button>
-      {sent && (
-        <p className="if-sent-note">
-          If your email app didn&apos;t open, feel free to reach us directly on KakaoTalk too.
+      {status === 'error' && (
+        <p className="if-sent-note if-error">
+          Something went wrong. Please try again, or reach us directly on KakaoTalk.
         </p>
       )}
     </form>

@@ -12,6 +12,10 @@ const TIME_SLOTS = [
 
 const EMAIL = 'youniek0712@gmail.com';
 
+// Web3Forms 무료 이메일 전송 서비스 — https://web3forms.com 에서 이메일로 발급받은
+// Access Key를 여기에 넣으면, 폼 제출 시 별도 메일 앱 없이 바로 이 이메일로 접수됩니다.
+const WEB3FORMS_ACCESS_KEY = 'YOUR_WEB3FORMS_ACCESS_KEY';
+
 export default function InquiryForm() {
   const [form, setForm] = useState({
     studentName: '',
@@ -23,12 +27,11 @@ export default function InquiryForm() {
     callTime: '',
     kakaoId: '',
   });
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState('idle'); // idle | sending | success | error
 
   const update = (key) => (e) => setForm((f) => ({ ...f, [key]: e.target.value }));
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const buildMailto = () => {
     const subject = `[상담 신청] ${form.studentName || '학생'} 학부모 문의`;
     const body = [
       '■ 학생 정보',
@@ -43,10 +46,58 @@ export default function InquiryForm() {
       `- 통화 가능 시간대: ${form.callTime || '-'}`,
       `- 카카오톡 ID: ${form.kakaoId || '-'}`,
     ].join('\n');
-    const mailto = `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    window.location.href = mailto;
-    setSent(true);
+    return `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!WEB3FORMS_ACCESS_KEY || WEB3FORMS_ACCESS_KEY === 'YOUR_WEB3FORMS_ACCESS_KEY') {
+      // 키가 아직 설정되지 않은 경우, 예전 방식(메일 앱 열기)으로 대체합니다.
+      window.location.href = buildMailto();
+      setStatus('success');
+      return;
+    }
+
+    setStatus('sending');
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_ACCESS_KEY,
+          subject: `[상담 신청] ${form.studentName || '학생'} 학부모 문의`,
+          from_name: 'TALK THRU EDU 홈페이지',
+          학생_이름: form.studentName,
+          학생_나이: form.studentAge,
+          학년: form.grade,
+          학부모_성함: form.parentName,
+          학부모_전화번호: form.parentPhone,
+          학부모_이메일: form.parentEmail || '-',
+          통화_가능_시간대: form.callTime || '-',
+          카카오톡_ID: form.kakaoId || '-',
+        }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setStatus('success');
+      } else {
+        setStatus('error');
+      }
+    } catch (err) {
+      setStatus('error');
+    }
+  };
+
+  if (status === 'success') {
+    return (
+      <div className="inquiry-form if-success">
+        <div className="if-success-icon">✓</div>
+        <h3>상담 신청이 접수되었습니다!</h3>
+        <p>빠른 시일 내에 확인 후 연락드리겠습니다. 급하신 경우 카카오톡으로도 문의해주세요.</p>
+      </div>
+    );
+  }
 
   return (
     <form className="inquiry-form" onSubmit={handleSubmit}>
@@ -114,12 +165,12 @@ export default function InquiryForm() {
         </div>
       </div>
 
-      <button type="submit" className="btn btn-gold if-submit">
-        상담 신청 보내기
+      <button type="submit" className="btn btn-gold if-submit" disabled={status === 'sending'}>
+        {status === 'sending' ? '보내는 중...' : '상담 신청 보내기'}
       </button>
-      {sent && (
-        <p className="if-sent-note">
-          이메일 앱이 열리지 않았다면, 카카오톡으로도 바로 문의하실 수 있어요.
+      {status === 'error' && (
+        <p className="if-sent-note if-error">
+          전송에 실패했어요. 잠시 후 다시 시도하시거나, 카카오톡으로 바로 문의해주세요.
         </p>
       )}
     </form>
