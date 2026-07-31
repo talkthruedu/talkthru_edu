@@ -227,7 +227,13 @@ section.alt .card{border-color:#eee6d8}
 .inquiry-form input:focus,.inquiry-form select:focus{border-color:var(--ocean);background:#fff}
 .inquiry-form input::placeholder{color:#a7b2bd}
 .if-submit{width:100%;justify-content:center;border:0;cursor:pointer;font-size:16px;padding:15px 26px;margin-top:6px}
+.if-submit:disabled{opacity:.65;cursor:default}
 .if-sent-note{text-align:center;font-size:13px;color:var(--ink-soft);margin-top:14px}
+.if-sent-note.if-error{color:#b0652f;font-weight:600}
+.inquiry-form.if-success{text-align:center;padding:56px 40px}
+.if-success-icon{width:52px;height:52px;border-radius:50%;background:var(--ocean-light);color:var(--ocean);font-size:26px;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 18px}
+.inquiry-form.if-success h3{font-size:19px;font-weight:700;color:var(--navy);margin-bottom:8px}
+.inquiry-form.if-success p{font-size:14px;color:var(--ink-soft)}
 
 /* news entry */
 .news-entry{max-width:640px;margin:0 auto;background:#fff;border:1px solid var(--line);border-radius:var(--r-md);padding:28px 30px;display:flex;align-items:center;gap:20px;text-align:left}
