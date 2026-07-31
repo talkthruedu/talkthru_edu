@@ -406,7 +406,7 @@ export default function PageEn() {
         <p>
           Fill out the form below and we&apos;ll personally review it and get back to you.
           <br />
-          For urgent questions, KakaoTalk gets you the fastest response.
+          For a fast reply, message us on KakaoTalk right now.
         </p>
         <InquiryFormEn />
         <div style={{ marginTop: 22 }}>

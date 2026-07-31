@@ -388,7 +388,7 @@ export default function Page() {
         <p>
           아래 폼을 남겨주시면 직접 검토하고 답변드립니다.
           <br />
-          급하신 경우 카카오톡으로도 빠르게 안내받으실 수 있어요.
+          빠른 상담은 카카오톡으로 지금 바로 문의주세요.
         </p>
         <InquiryForm />
         <div style={{ marginTop: 22 }}>
