@@ -194,6 +194,11 @@ export default function Page() {
             <h2>교실 밖에서 이어지는 배움</h2>
             <p>방과 후에는 시드니 곳곳에서, 주말에는 온 가족이 함께 근교로 떠납니다.</p>
           </div>
+
+          <div className="subsection-head">
+            <span className="stag">WEEKDAY</span>
+            <h3>방과 후 액티비티</h3>
+          </div>
           <div className="act-grid">
             {ACTIVITIES.map((a) => (
               <div className="act-card" key={a.img}>
@@ -201,6 +206,11 @@ export default function Page() {
                 <div className="act-tx">{a.title}</div>
               </div>
             ))}
+          </div>
+
+          <div className="subsection-head" style={{ marginTop: 48 }}>
+            <span className="stag gold">WEEKEND · 가족 동반</span>
+            <h3>주말 시티 · 근교 투어</h3>
           </div>
           <div className="tour-grid">
             <div className="tour">
